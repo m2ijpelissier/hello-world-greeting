@@ -52,34 +52,34 @@ pipeline {
             sh "curl -u admin:admin --upload-file /home/jenkins/tomcat/webapps/app.war 'http://10.10.20.31:8081/repository/hello_fiable/app_fiable${BUILD_NUMBER}.war'"
           }
         }
-        stage('Creation de l\'image') {
-          agent {
-            label 'docker'
-          }
-          stages {
-            stage('Téléchargement du binaire') {
-              steps {
-                sh "wget -P /home/jenkins/docker/tomcat_app http://10.10.20.31:8081/repository/hello_fiable/app_fiable${BUILD_NUMBER}.war"
-                sh "mv /home/jenkins/docker/tomcat_app/ app_fiable${BUILD_NUMBER}.war /home/jenkins/docker/tomcat_app/app.war"
-              }
-            }
-            stage('Compilation de l\'image') {
-              steps {
-                sh 'docker build -t tomcat_app /home/jenkins/docker/tomcat_app'
-              }
-            }
-            stage('Stockage de l\'image') {
-              steps {
-                sh "docker tag tomcat_app m2ijpelissier/tomcat_app:${BUILD_NUMBER}" 
-                sh "docker tag tomcat_app m2ijpelissier/tomcat_app"
-                sh "docker login -u m2ijpelissier -p FiexYWJV6hPSCzc"
-                sh "docker push m2ijpelissier/tomcat_app:${BUILD_NUMBER}"
-                sh "docker push m2ijpelissier/tomcat_app"
-              }
-            }
-          }
-        }    
       }
+    }
+    stage('Creation de l\'image') {
+      agent {
+        label 'docker'
+      }
+      stages {
+        stage('Téléchargement du binaire') {
+          steps {
+            sh "wget -P /home/jenkins/docker/tomcat_app http://10.10.20.31:8081/repository/hello_fiable/app_fiable${BUILD_NUMBER}.war"
+            sh "mv /home/jenkins/docker/tomcat_app/ app_fiable${BUILD_NUMBER}.war /home/jenkins/docker/tomcat_app/app.war"
+          }
+        }
+        stage('Compilation de l\'image') {
+          steps {
+            sh 'docker build -t tomcat_app /home/jenkins/docker/tomcat_app'
+          }
+        }
+        stage('Stockage de l\'image') {
+          steps {
+            sh "docker tag tomcat_app m2ijpelissier/tomcat_app:${BUILD_NUMBER}" 
+            sh "docker tag tomcat_app m2ijpelissier/tomcat_app"
+            sh "docker login -u m2ijpelissier -p FiexYWJV6hPSCzc"
+            sh "docker push m2ijpelissier/tomcat_app:${BUILD_NUMBER}"
+            sh "docker push m2ijpelissier/tomcat_app"
+          }
+        }
+      }     
     }
   }
 }
