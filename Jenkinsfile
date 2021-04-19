@@ -25,6 +25,7 @@ pipeline {
     stage('Publication') {
       agent {
         label 'Linux'
+      }
       steps {
         sh 'echo " hello world "'
         sh "curl -u admin:admin --upload-file target/*.jar 'http://10.10.20.31:8081/repository/depot_test/test.jar'"
