@@ -71,10 +71,10 @@ pipeline {
             stage('Stockage de l\'image') {
               steps {
                 sh "docker tag tomcat_app m2ijpelissier/tomcat_app:${BUILD_NUMBER}" 
-                sh 'docker tag tomcat_app m2ijpelissier/tomcat_app' 
-                sh 'docker login -u m2ijpelissier -p FiexYWJV6hPSCzc’
+                sh "docker tag tomcat_app m2ijpelissier/tomcat_app"
+                sh "docker login -u m2ijpelissier -p FiexYWJV6hPSCzc"
                 sh "docker push m2ijpelissier/tomcat_app:${BUILD_NUMBER}"
-                sh 'docker push m2ijpelissier/tomcat_app'
+                sh "docker push m2ijpelissier/tomcat_app"
               }
             }
           }
