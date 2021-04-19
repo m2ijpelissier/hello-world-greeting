@@ -24,7 +24,7 @@ pipeline {
     }
     stage('Publication') {
       agent {
-        label 'Linux'
+        label 'agent_java'
       }
       steps {
         sh 'echo " hello world "'
