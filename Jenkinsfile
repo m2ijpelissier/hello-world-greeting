@@ -1,10 +1,9 @@
 pipeline { 
-  agent none
+  agent {
+    label 'agent_java'
+  }
   stages {
     stage('Test unitaire') {
-      agent {
-        label 'agent_java'
-      }
       steps {
         sh 'mvn test'
       }
@@ -15,17 +14,11 @@ pipeline {
       }
     }
     stage('Compilation') {
-      agent {
-        label 'agent_java'
-      }
       steps {
         sh 'mvn -B -DskipTests clean package'
       }
     }
     stage('Publication') {
-      agent {
-        label 'agent_java'
-      }
       steps {
         sh 'echo " hello world "'
         sh "curl -u admin:admin --upload-file /home/jenkins/workspace/hello_world_master/target/hello-0.0.1.war 'http://10.10.20.31:8081/repository/depot_test/test.jar'"
